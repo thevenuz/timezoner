@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "timezoner",
+    "version": "1.0.0",
+    "description": "A chrome extension",
+    "permissions": [
+      "activeTab"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["src/moment.js","src/momenttz.js","src/script.js"]
+      }
+    ] 
+  }
+  

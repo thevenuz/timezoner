@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "timezoner",
     "version": "1.0.0",
-    "description": "A chrome extension",
+    "description": "A chrome extension that automatically converts the time on the webpages to your local timezoe.",
     "permissions": [
       "activeTab"
     ],
@@ -11,6 +11,11 @@
         "matches": ["<all_urls>"],
         "js": ["src/moment.js","src/momenttz.js","src/script.js"]
       }
-    ] 
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "timezoner-firefox-addon@thevenuz"
+        }
+      }
   }
   

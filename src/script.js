@@ -2398,8 +2398,8 @@ const tzMap = {
 const getTzName = (tzMapObj, tzShortName) => {
   return Object.keys(tzMapObj).find(
     key =>
-      tzMapObj[key].short.toLowerCase().replace('.', '') ===
-      tzShortName.toLowerCase()
+      tzMapObj[key].short.toLowerCase().replaceAll('.', '') ===
+      tzShortName.toLowerCase().replaceAll('.', '')
   );
 };
 
@@ -2420,6 +2420,20 @@ const convertTo24Hr = (time, meridiem) => {
   return time;
 };
 
+const matchTzPart = matchesArr => {
+  for (let i = 0; i < matchesArr.length; i++) {
+    for (const key in tzMap) {
+      if (
+        tzMap[key].short.toLowerCase().replaceAll('.', '') ===
+        matchesArr[i].toLowerCase().replaceAll('.', '')
+      ) {
+        return matchesArr[i];
+      }
+    }
+  }
+  return null;
+};
+
 const replaceTime = () => {
   // Regex to match time that includes timezone.
   // TODO: Can be improved to be more accurate.
@@ -2435,6 +2449,8 @@ const replaceTime = () => {
 
   let node;
 
+  const trackUpdatedMatches = [];
+
   while ((node = walker.nextNode())) {
     // Match the regex against the page body.
     const matches = node.textContent.match(regex);
@@ -2442,8 +2458,11 @@ const replaceTime = () => {
     if (matches) {
       matches.forEach(match => {
         if (match) {
-          // Get the timezone part of the match.
-          const timeZonePart = match.match(/[A-Za-z]{2,3}/g)[0].trim();
+          // Get the timezone part or words that are similar from the match.
+          const timeZoneMatches = match.match(/[A-Za-z]{2,3}/g);
+
+          // Get the timezone part from the match.
+          const timeZonePart = matchTzPart(timeZoneMatches);
 
           // Get timezone full name from the abbreviation.
           const tzName = getTzName(tzMap, timeZonePart);
@@ -2467,11 +2486,16 @@ const replaceTime = () => {
             const clientTime = currentTime.tz(clientTz);
             const clientTimeFormatted = clientTime.format('hh:mm a z');
 
-            const localTimeToAdd = `${match} <b title="Added by timezoner">(${clientTimeFormatted})</b>`;
-            document.body.innerHTML = document.body.innerHTML.replace(
-              match,
-              localTimeToAdd
-            );
+            if (trackUpdatedMatches.includes(match)) {
+              return;
+            } else {
+              const localTimeToAdd = `${match} <b title="Added by timezoner">(${clientTimeFormatted})</b>`;
+              document.body.innerHTML = document.body.innerHTML.replaceAll(
+                match,
+                localTimeToAdd
+              );
+              trackUpdatedMatches.push(match);
+            }
           }
         }
       });

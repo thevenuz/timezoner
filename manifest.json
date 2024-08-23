@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "timezoner",
+    "name": "Timezoner",
     "version": "1.0.0",
-    "description": "A chrome extension",
+    "description": "A chrome extension that automatically converts times on websites to your local timeozone.",
     "permissions": [
       "activeTab"
     ],
@@ -11,6 +11,13 @@
         "matches": ["<all_urls>"],
         "js": ["src/moment.js","src/momenttz.js","src/script.js"]
       }
-    ] 
+      
+    ],
+    "icons":{
+      "16":"assets/icon16.png",
+      "32":"assets/icon32.png",
+      "48":"assets/icon48.png",
+      "128":"assets/icon128.png"
+    }
   }
   

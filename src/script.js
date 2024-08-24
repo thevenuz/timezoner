@@ -1,4 +1,5 @@
 // Timezone names to abbreviations map.
+// TODO: Add more timezones as needed.
 const tzMap = {
   'Africa/Abidjan': {
     long: 'Greenwich Mean Time',
@@ -2466,6 +2467,7 @@ const replaceTime = () => {
 
           // Get timezone full name from the abbreviation.
           const tzName = getTzName(tzMap, timeZonePart);
+
           if (!tzName) {
             console.log('Timezone not found:', timeZonePart);
           } else {
@@ -2486,9 +2488,7 @@ const replaceTime = () => {
             const clientTime = currentTime.tz(clientTz);
             const clientTimeFormatted = clientTime.format('hh:mm a z');
 
-            if (trackUpdatedMatches.includes(match)) {
-              return;
-            } else {
+            if (!trackUpdatedMatches.includes(match)) {
               const localTimeToAdd = `${match} <b title="Added by timezoner">(${clientTimeFormatted})</b>`;
               document.body.innerHTML = document.body.innerHTML.replaceAll(
                 match,

@@ -2486,9 +2486,7 @@ const replaceTime = () => {
             const clientTime = currentTime.tz(clientTz);
             const clientTimeFormatted = clientTime.format('hh:mm a z');
 
-            if (trackUpdatedMatches.includes(match)) {
-              return;
-            } else {
+            if (!trackUpdatedMatches.includes(match)) {
               const localTimeToAdd = `${match} <b title="Added by timezoner">(${clientTimeFormatted})</b>`;
               document.body.innerHTML = document.body.innerHTML.replaceAll(
                 match,

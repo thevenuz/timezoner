@@ -21,7 +21,7 @@ For any issues, either with the extension not working with particular formats or
 
 ## Credits
 
-Credits to [laralove](https://github.com/laralove143)'s [timezoner](https://github.com/laralove143/timezoner). The idea of displaying the time in user's timezone is inspired from their discord bot.
+Credits to [laralove](https://github.com/lara-rium)'s [timezoner](https://github.com/lara-rium/timezoner). The idea of displaying the time in user's timezone is inspired from their discord bot.
 
 ## License
 
